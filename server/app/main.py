@@ -1,8 +1,20 @@
 from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
+
+from app.routers import dac_router
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(dac_router.router)
 
 
 @app.get("/")
-async def root():
-    return {"message": "Hello World"}
+@app.get("/health")
+def health_check() -> str:
+    return "Server OK"

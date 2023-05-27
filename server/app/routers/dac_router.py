@@ -10,6 +10,8 @@ router = APIRouter(
 
 class DacSolution(TypedDict):
     id: str
+    customerName: str
+    customerEmail: str
     metricsUrl: str
 
 
@@ -17,38 +19,36 @@ class DacSolution(TypedDict):
 def get_deployed_dac_solutions() -> list[DacSolution]:
     mock_data: list[DacSolution] = [
         {"id": "1",
+         "customerName": "Car factory",
+         "customerEmail": "jbpm.pv207@gmail.com",
          "metricsUrl": "http://127.0.0.1:8000/dac/1/metrics"},
         {"id": "2",
+         "customerName": "Conscious village",
+         "customerEmail": "jbpm.pv207@gmail.com",
          "metricsUrl": "http://127.0.0.1:8000/dac/2/metrics"},
     ]
 
     return mock_data
 
 
-class DacMetric(TypedDict):
+class DacMetrics(TypedDict):
     cpuUsage: int
-    memoryUsage: int
-    storageUsage: int
     temperature: int
-    batteryLife: int
+    backupBatteryLife: int
 
 
 @router.get("/{dac_id}/metrics")
-def get_dac_metrics(dac_id: str) -> DacMetric:
-    mock_data: dict[str, DacMetric] = {
+def get_dac_metrics(dac_id: str) -> DacMetrics:
+    mock_data: dict[str, DacMetrics] = {
         "1": {
             "cpuUsage": 50,
-            "memoryUsage": 50,
-            "storageUsage": 50,
-            "temperature": 50,
-            "batteryLife": 50,
+            "temperature": 30,
+            "backupBatteryLife": 90,
         },
         "2": {
-            "cpuUsage": 100,
-            "memoryUsage": 100,
-            "storageUsage": 100,
-            "temperature": 100,
-            "batteryLife": 100,
+            "cpuUsage": 90,
+            "temperature": 50,
+            "backupBatteryLife": 95,
         }
     }
 

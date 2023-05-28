@@ -11,10 +11,12 @@
     parameters:
       httpMethodRestrict: "POST"
     steps:
+      - log:
+          message: "Adding to processes needing adjustment: ${body}"
       - unmarshal:
           json: {}
       - to:
-          uri: "sql:INSERT INTO processes_needing_adjustment (processName, date) VALUES (:#processName, DATE('now'))"
+          uri: "sql:INSERT INTO processes_needing_adjustment (processName, description, date) VALUES (:#processName, :#description, DATE('now'))"
       - setBody:
           simple: "Process added successfully"
 
@@ -35,10 +37,12 @@
     parameters:
       httpMethodRestrict: "POST"
     steps:
+      - log:
+          message: "Adding to delayed findings: ${body}"
       - unmarshal:
           json: {}
       - to:
-          uri: "sql:INSERT INTO delayed_findings (findingName, date) VALUES (:#findingName, DATE('now'))"
+          uri: "sql:INSERT INTO delayed_findings (processName, description, date) VALUES (:#processName, :#description, DATE('now'))"
       - setBody:
           simple: "Delayed finding added successfully"
 

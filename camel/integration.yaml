@@ -1,0 +1,55 @@
+- from:
+    uri: "platform-http:/health"
+    parameters:
+      httpMethodRestrict: "GET"
+    steps:
+      - setBody:
+          simple: "Camel OK"
+
+- from:
+    uri: "platform-http:/kpi/processes-needing-adjustment"
+    parameters:
+      httpMethodRestrict: "POST"
+    steps:
+      - unmarshal:
+          json: {}
+      - to:
+          uri: "sql:INSERT INTO processes_needing_adjustment (processName, date) VALUES (:#processName, DATE('now'))"
+      - setBody:
+          simple: "Process added successfully"
+
+- from:
+    uri: "platform-http:/kpi/processes-needing-adjustment"
+    parameters:
+      httpMethodRestrict: "GET"
+    steps:
+        - to:
+            uri: "sql:SELECT * FROM processes_needing_adjustment"
+        - marshal:
+            json: {}
+        - setBody:
+            simple: "${body}"
+
+- from:
+    uri: "platform-http:/kpi/delayed-findings"
+    parameters:
+      httpMethodRestrict: "POST"
+    steps:
+      - unmarshal:
+          json: {}
+      - to:
+          uri: "sql:INSERT INTO delayed_findings (findingName, date) VALUES (:#findingName, DATE('now'))"
+      - setBody:
+          simple: "Delayed finding added successfully"
+
+- from:
+    uri: "platform-http:/kpi/delayed-findings"
+    parameters:
+      httpMethodRestrict: "GET"
+    steps:
+        - to:
+            uri: "sql:SELECT * FROM delayed_findings"
+        - marshal:
+            json: {}
+        - setBody:
+            simple: "${body}"

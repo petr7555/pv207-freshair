@@ -8,11 +8,11 @@
 
 ## How to run
 
-- Start
+- Initialize the database: `sqlite3 data.db < init_db.sql`
+- Start the server
   with `camel run integration.yaml application.properties --deps=org.xerial:sqlite-jdbc:3.41.2.1 --dev --port=8081`
   or with `camel run integration.yaml --deps=org.xerial:sqlite-jdbc:3.41.2.1 --dev` since `application.properties` are
   picked up automatically.
-- Initialize database: `sqlite3 data.db < init_db.sql`
 
 ## Available endpoints
 

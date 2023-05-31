@@ -3,7 +3,7 @@
 ## How to run:
 
 - Install dependencies: `poetry install`.
-- Run server: `uvicorn app.main:app --reload`.
+- Start the server: `uvicorn app.main:app --reload`.
 
 ## Info
 

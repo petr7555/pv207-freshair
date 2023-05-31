@@ -23,7 +23,7 @@ def get_warehouse_status() -> WarehouseStatus:
         "items": [
             {"name": "fan", "quantity": 50},
             {"name": "cable", "quantity": 200},
-            {"name": "casing", "quantity": 10}
+            {"name": "casing", "quantity": 10},
         ]
     }
     return mock_data
